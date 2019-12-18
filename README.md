@@ -1,2 +1,7 @@
 # nonlinear_sys_coursework
-personal stuff for nonlinear system coursework
+archived stuff for nonlinear system coursework, known to contain errors
+
+
+
+
+

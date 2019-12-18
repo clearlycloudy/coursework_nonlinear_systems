@@ -1,0 +1,303 @@
+\documentclass[12pt,letter]{article}
+
+%% \ifCLASSOPTIONcompsoc
+%% % IEEE Computer Society needs nocompress option
+%% % requires cite.sty v4.0 or later (November 2003)
+%% \usepackage[nocompress]{cite}
+%% \else
+%% % normal IEEE
+%% \usepackage{cite}
+%% \fi
+
+%% \usepackage[fleqn]{amsmath}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{amsmath,amsfonts,amsthm,bm}
+\usepackage{breqn}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{algorithm2e}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{subcaption}
+%% \usepackage{datetime}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{mathrsfs}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+
+\pagestyle{fancy}
+
+\usetikzlibrary{arrows}
+
+\DeclareMathOperator*{\argmin}{argmin}
+\newcommand*{\argminl}{\argmin\limits}
+
+\newcommand{\mathleft}{\@fleqntrue\@mathmargin0pt}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+\begin {document}
+
+\rhead{(Bill) Yuan Liu, student \#: 996954078\\ Date: 2019/09/28}
+\lhead{ECE1647F - Nonlinear Systems - Assignment 1}
+
+% \begin{align*}    
+% \end{align*}
+
+\begin{itemize}
+  
+\item A.13
+
+  Show $\R^n$ is open:\\
+  Since $(\forall p \in \R^n)(\forall \delta>0) (B_{\delta}^n(p)) \subset \R^n$, where $B_{\delta}^n(p) := \{x\in\R^n: \|x-p\| < \delta \}$ is true. This trivially satisfies the definition of an open set:
+  $(\forall p \in \R^n)(\exists \delta>0) (B_{\delta}^n(p)) \subset \R^n$. Thus $\R^n$ is open.\\
+
+  Show $\R^n$ is closed:\\
+  Since all limit points $\{p\}$, where $(\forall p \in \R^n)(\forall \delta>0) (\forall q \in B_{\delta}^n(p), q \neq p)$ trivially satisfies $q \in \R^n)$. This satisfies the definition of a closed set. Thus $\R^n$ is closed.\\
+
+  Show $\O$ is open:\\
+  $(\forall p \in \O)(\exists \delta>0)(B_\delta^n(p) \subset \O)$ is trivially upheld since p is non-existent and thus need not be evaluated, thus $\O$ is open.\\
+
+  Show $\O$ is closed:\\
+  Since $\O$ is empty, the limit points set satisfying $\{p: (\forall \delta>0)(\exists q \in B_\delta^n(p), q \neq p)\}$ is empty and thus trivially satisfies $\{p: (\forall \delta>0)(\exists q \in B_\delta^n(p), q \neq p)(q \in \O)\}$. Thus $\O$ contains all its limit points and is closed.
+
+\item A.14
+  
+  Show $X$ is closed iff $X^c=\{x\in\R^n: x \notin X\}$ is open\\
+
+  Show $X$ closed $\rightarrow$ $X^c$ open:\\
+  $X$ closed $\rightarrow \partial(X) \subset X$\\
+  $X=interior(X) \cup \partial(X)$\\
+  $X^c=(interior(X) \cup \partial(X))^c$\\
+  $X^c=(interior(X))^c \cap (\partial(X))^c$\\
+  $X^c=closure(X^c) \cap (\partial(X))^c$\\
+  $(\partial(X))^c = interior(X) \cup interior(X^c)$\\
+  $X^c=closure(X^c) \cap (interior(X) \cup interior(X^c))$\\
+  $X^c=interior(X^c)$\\
+  Then $X^c$ is open.\\
+  \\
+
+  Show $X^c$ open $\rightarrow$ $X$ closed:\\
+  $X^c=closure(X^c) \cap (\partial(X))^c=interior(X^c)$\\
+  $(X^c)^c=X=(interior(X^c))^c=closure((X^c)^c)=closure(X)$\\
+  Then $X$ is closed\\  
+
+  \pagebreak
+  
+\item A.15
+  
+  Show $X$ is closed iff $X$ contains all its boundary points\\
+  
+  Show $X$ closed $\rightarrow$ $X$ contains all its boundary points:\\
+  From the definition of a boundary point, it has for all open neighbourhood with at least one point in the neighbourhood that is also in $X$. Then, boundary point is also a limit point assuming the boundary point is not the only singular point within $X$ around the neighbourhood. In the degenerate case, the boundary point is a member of $X$ anyways. Thus, $X$ is closed implies it contains all its limits points which implies it contains all boundary points plus the degenerate case.
+  \\
+  
+  Show $X$ contains all its boundary points $\rightarrow$ $X$ closed:\\
+  $X=interior(X)\cup\partial(X)$\\
+  $(\forall p: \text{p is a limit point}) p \in (\text{interior}(X) \cup \partial(X))$ where $\text{interior}(X) \cap \partial(X) = \O$\\
+  If $X$ includes all the boundary points in addition to its interior points, then it is clear that all limit points of $X$ are contained within $X$, hence X is closed.
+  
+\item A.16
+  \begin{enumerate}
+  \item $\Z\times\{0\}$:\\
+    not open\\
+    closed\\
+    limit points = $\O$\\
+    boundary points = $\Z\times\{0\}$\\
+  \item $\{x\in\R^2: x_1=1/n, n\in\N,x_2=0\}$:\\
+    not open\\
+    not closed\\
+    limit points = $\{[0,0]^T\}$\\
+    boundary points = $\{[1/n,0]^T\},\ n\in\N$\\
+  \item $\{x\in\R^2: 1\leq x_1\leq2\}$:\\
+    not open\\
+    closed\\
+    limit points = $\{[x_1,x_2]^T\}, 1\leq x_1\leq2, x_2\in\R$\\
+    boundary points = $\{[1,x_2]^T, [2,x_2]^T\}, x_2\in\R$\\
+  \item $\{x\in\R^2: 1<x_1<2\}$:\\
+    open\\
+    not closed\\
+    limit points = $\{[x_1,x_2]^T\}, 1\leq x_1\leq2, x_2\in\R$\\
+    boundary points = $\{[1,x_2]^T, [2,x_2]^T\}, x_2\in\R$\\
+  \item $\{x\in\R^2: 1\leq\|x\|_2\leq2\}$:\\
+    not open\\
+    closed\\
+    limit points $\{x\in\R^2: 1\leq\|x\|_2\leq2\}$\\
+    boundary points: 2 circles of radius 1,2 centered at origin=$\{x: x\in\R^2, \|x\|_2=1 \vee \|x\|_2=2 \}$\\
+  \end{enumerate}
+
+\item A.17
+  
+  \begin{enumerate}
+    \item
+  Is $X=\{\begin{bmatrix}x_1 & x_2\end{bmatrix}^T\in\R^2: |x_2|<|x_1|\}^T$ connected?\\
+
+  let $X=X_1\cup X_2$, where:\\
+  $X_1 = \{ \begin{bmatrix}x_1 & x_2\end{bmatrix}^T: |x_2|<|x_1|, x_1<0\}$\\
+  $X_2 = \{ \begin{bmatrix}x_1 & x_2\end{bmatrix}^T: |x_2|<|x_1|, x_1\geq 0\}$\\
+
+  $closure(X_1) = \bar{X_1}= \{ \begin{bmatrix}x_1 & x_2\end{bmatrix}^T: |x_2|\leq|x_1|, x_1\leq0\}$\\
+  $closure(X_2) = \bar{X_2}= \{ \begin{bmatrix}x_1 & x_2\end{bmatrix}^T: |x_2|\leq|x_1|, x_1\geq0\}$\\
+
+  $X_1 \cap \bar{X_2} = \O$\\
+  $\bar{X_1} \cap X_2 = \O$\\
+
+  Then, $X_1$ and $X_2$ are separated. $X$ can be partitioned as a union of 2 non-empty separated sets. Thus $X$ is not connected.\\
+  
+  \\
+  
+\item
+  
+  Is $X\cup\{\begin{bmatrix}0 & 0\end{bmatrix}^T\}$ connected?\\
+
+  let $X=X_1\cup X_2$, where:\\
+  $X_1 = \{ \begin{bmatrix}x_1 & x_2\end{bmatrix}^T: |x_2|<|x_1|, x_1<0\}$\\
+  $X_2 = \{ \begin{bmatrix}x_1 & x_2\end{bmatrix}^T: |x_2|<|x_1|, x_1\geq 0\} \cup \begin{bmatrix}0 & 0\end{bmatrix}$\\
+
+  $closure(X_1) = \bar{X_1}= \{ \begin{bmatrix}x_1 & x_2\end{bmatrix}^T: |x_2|\leq|x_1|, x_1\leq0\}$\\
+  $closure(X_2) = \bar{X_2}= \{ \begin{bmatrix}x_1 & x_2\end{bmatrix}^T: |x_2|\leq|x_1|, x_1\geq0\}$\\ 
+
+  $X_1 \cap \bar{X_2} = \O$\\
+  $\bar{X_1} \cap X_2 = \begin{bmatrix}0 & 0\end{bmatrix}^T$\\
+
+  Then, $X_1$ and $X_2$ are not separated. $X\cup\{\begin{bmatrix}0 & 0\end{bmatrix}^T\}$ is a union of 2 non-empty non-separated sets. Thus, $X\cup\{\begin{bmatrix}0 & 0\end{bmatrix}^T\}$ is connected.
+
+\end{enumerate}
+
+\pagebreak
+
+\item A.18
+
+  $X=\{x\in\R^2: 0<\|x\|_2<1\}\cup\{\begin{bmatrix}0 & 0 \end{bmatrix}^T\}$.
+
+  \begin{enumerate}
+  \item Find all limit points.\\
+    $\{x\in\R^2: 0<\|x\|_2<1\} \cap closure(\{\begin{bmatrix}0 & 0 \end{bmatrix}\}) \neq \O$\\
+    $\{x\in\R^2: 0<\|x\|_2<1\}$ and $\{\begin{bmatrix}0 & 0 \end{bmatrix}\}$ are connected\\
+    $\{x\in\R^2: 0\leq\|x\|_2<1\}=\{x\in\R^2: 0<\|x\|_2<1\}\cup\{\begin{bmatrix}0 & 0 \end{bmatrix}\}$\\
+    all limit points of $X$ = $\{x\in\R^2:\|x\|\leq 1\}$
+  \item Find all boundary points.\\
+    all boundary points($\{x\in\R^2: 0\leq\|x\|_2<1\}$)=$\{x\in\R^2: \|x\|_2=1\}$
+  \end{enumerate}
+
+\item A.22
+  \begin{enumerate}
+  \item\\
+    Using Definition A.23, write definition that a function $f:X \rightarrow Y$ is not Lipschitz continuous at $x_0 \in X$.\\
+    f is not Lipschitz is the true statement that:\\
+    $\neg(\exists \delta>0)(\exists L>0)(\forall x \in B_{\delta}^n(x_0))(\forall y \in B_{\delta}^n(x_0))(\|f(x)-f(y)\| \leq L \|x-y\|)$\\
+    $=(\forall \delta>0)\neg(\exists L>0)(\forall x \in B_{\delta}^n(x_0))(\forall y \in B_{\delta}^n(x_0))(\|f(x)-f(y)\| \leq L \|x-y\|)$\\
+    $=(\forall \delta>0)(\forall L>0)\neg(\forall x \in B_{\delta}^n(x_0))(\forall y \in B_{\delta}^n(x_0))(\|f(x)-f(y)\| \leq L \|x-y\|)$\\
+    $=(\forall \delta>0)(\forall L>0)(\exists x \in B_{\delta}^n(x_0))\neg(\forall y \in B_{\delta}^n(x_0))(\|f(x)-f(y)\| \leq L \|x-y\|)$\\
+    $=(\forall \delta>0)(\forall L>0)(\exists x \in B_{\delta}^n(x_0))(\exists y \in B_{\delta}^n(x_0))\neg(\|f(x)-f(y)\| \leq L \|x-y\|)$\\
+    $=(\forall \delta>0)(\forall L>0)(\exists x \in B_{\delta}^n(x_0))(\exists y \in B_{\delta}^n(x_0))(\|f(x)-f(y)\| > L \|x-y\|)$\\
+    
+  \item\\
+    Prove that $f: \R\rightarrow \R, f(x)=x^{1/3}$ is not Lipschitz continuous at $x_0=0$.\\
+    $f(x_0)=0$\\
+    need to show:\\
+    $(\forall \delta>0)(\forall L>0)(\exists x \in B_{\delta}^n(0))(\exists y \in B_{\delta}^n(0))(\|f(x)-f(y)\| > L \|x-y\|)$\\
+    let $y=x_0=0$\\
+    $(\forall \delta>0)(\forall L>0)(\exists x \in B_{\delta}^n(0))(\|f(x)-0\| > L \|x-0\|)$\\
+    using 2-norm, $\|f(x)\| = |x^{1/3}|$\\
+    let $x=c$\\
+    $f(c)=|c^{1/3}|$\\
+    $\|c-0\|=|c|$\\
+    $\|f(c)-0\|=|c^{1/3}|=\frac{|c|}{|c^{2/3}|}=|c^{2/3}|^{-1}\|c-0\|$\\
+    $\|f(x)-f(y)\|=|c^{2/3}|^{-1}\|x-y\|$\\
+    let c go towards 0:\\
+    $L_c=\lim_{c\to 0}|c^{2/3}|^{-1}=\infty$\\
+    $\|f(x)-f(y)\|=L_c\|x-y\|$, at $y=x_0$, $x$ near neighbourhood of $x_0$\\
+    Therefore, it is true that:\\
+    $(\forall \delta>0)(\forall L>0)( L_c\|x-y\| > L \|x-y\|)$\\
+    which satisfy:\\
+    $(\forall \delta>0)(\forall L>0)(\exists x \in B_{\delta}^n(0))(\exists y \in B_{\delta}^n(0))(\|f(x)-f(y)\| > L \|x-y\|)$\\
+    Thus, $f(x)=x^{1/3}$ is not Lipschitz continuous at $x_0=0$.
+  \end{enumerate}
+
+  \pagebreak
+
+\item A.24
+  let $A: \R^n\rightarrow\R^n, x \mapsto Ax$.\\
+  \begin{enumerate}
+  \item
+    Show this function is continuously differentiable\\
+    
+    Show $x\mapsto Ax$ is differentiable:\\
+    $\lim_{h \to 0} \frac{\|A(x+h)-A(x)-Lh\|}{\|h\|}=0$\\
+    $\lim_{h \to 0} \frac{\|Ax+Ah-Ax-Lh\|}{\|h\|}=0$\\
+    $\lim_{h \to 0} \frac{\|Ah-Lh\|}{\|h\|}=0$\\
+    $\lim_{h \to 0} (A-L)h=0$ by positivity of norm\\
+    $A=L$\\
+    $L=f'(x_0)=\frac{\partial (Ax)}{\partial x}(x_0)=A$\\
+    $(\forall x_0 \in X)f'(x_0)=L=A$\\
+    Then, $x \mapsto Ax$ is differentiable.\\
+
+    Show $x \mapsto df_x$ is continuous:\\
+    $df_x=A$\\
+    use of Lipschitz continuity $\rightarrow$ continuous:\\
+    show $(\forall x_0 \in X)(\exists \delta>0)(\exists L>0)(\forall x,y \in B_{\delta}^n(x_0)) \|Ax-Ay\| \leq L \|x-y\|$\\
+    since $\|A\| = sup\{ \frac{\|A(x-y)\|}{\|x-y\|}: x-y \neq 0 \}$\\
+    $\|A\| \geq \frac{\|A(x-y)\|}{\|x-y\|}, x-y \neq 0$\\
+    let $L=\|A\|$\\
+    $L \geq \frac{\|A(x-y)\|}{\|x-y\|}, x-y \neq 0$\\
+    $L \|x-y\| \geq \|A(x-y)\|$\\
+    Then it is true that:\\
+    $(\forall x_0 \in X)(\exists \delta>0)(\exists L>0)(\forall x,y \in B_{\delta}^n(x_0)) \|Ax-Ay\| \leq L \|x-y\|$\\
+    Then, $x \mapsto df_x$ is Lipschitz continous and is continuous.\\
+    $A: \R^n\rightarrow\R^n, x \mapsto Ax$ is continuously differentiable.
+  \item
+    Show this function's differential is $\bold{dA}_{x_0}(h)=Ah$\\
+    $\lim_{h \to 0}\frac{\|A(x_0+h)-A(x_0)-df_{x_0}(h)\|}{\|h\|}=0$\\
+    $\lim_{h \to 0}\frac{\|Ah-df_{x_0}(h)\|}{\|h\|}=0$\\
+    $Ah-df_{x_0}(h)=0$\\
+    $df_{x_0}(h)=Ah$\\
+    
+  \end{enumerate}
+
+  \pagebreak
+  
+\item A.25
+  Consider a quadratic form $Q(x): \R^n\rightarrow\R$\\
+  \begin{enumerate}
+  \item
+    Show it is differentiable with differential of $\bold{dQ_{x_0}}(h)=2x_0^TQh$ so that matrix representation of its differential is $dQ_{x_0}=2x_0^TQ$\\
+    $\lim_{h \to 0} \frac{\|f(x_0+h)-f(x_0)-df_{x_0}(h)\|}{\|h\|}=0$\\
+    $\lim_{h \to 0} \frac{\|(x_0+h)^TQ(x_0+h)-x_0^TQx_0-df_{x_0}(h)\|}{\|h\|}=0$\\
+    $\lim_{h \to 0} \frac{\|(x_0^TQx_0+x_0^TQh+h^TQx_0+h^TQh-x_0^TQx_0-df_{x_0}(h)\|}{\|h\|}=0$\\
+    $\lim_{h \to 0} \frac{\|(2x_0^TQh+h^TQh-df_{x_0}(h)\|}{\|h\|}=0$\\
+    $\frac{h^TQh}{\|h\|}$ vanishes as $h \to 0$\\
+    $\lim_{h \to 0} \frac{\|(2x_0^TQh-df_{x_0}(h)\|}{\|h\|}=0$\\
+    $2x_0^TQh-df_{x_0}(h)=0$ by positivity of norm\\
+    Thus, the differential of a quadratic form at $x_0$ is $df_{x_0}(h)=2x_0^TQh$\\
+    $(\forall x_0 \in \R^n)df_{x_0}(h)=2x_0^TQh$ exists and a quadratic form is differentiable.\\
+    Thus, matrix representation of its differential is $dQ_{x_0}=2x_0^TQ$
+  \item
+    Show it is $C^1$\\
+    From previous part, $Q$ is shown to be continuous. Then we need to show its differential function is also continuous.\\
+    Using Lipschitz continuity $\rightarrow$ continuous:\\
+    Show:\\
+    $(\forall x_0>0)(\exists \delta>0)(\exists L>0)(\forall x,y \in B_{\delta}^n(x_0)) \|f(x)-f(y) \| \leq L \|x-y\|$\\
+    let $f=dQ_{x_0}=2x_0^TQ$\\
+    $(\forall x_0>0)(\exists \delta>0)(\exists L>0)(\forall x,y \in B_{\delta}^n(x_0)) \|(2x^TQ)^T-(2y^TQ)^T \| \leq L \|x-y\|$\\
+    $\|(2x^TQ)^T-(2y^TQ)^T\|=2\|Q^Tx-Q^Ty\|$\\
+    $Q$ is symmetric: $Q^T=Q$\\
+    $\|(2x^TQ)^T-(2y^TQ)^T\|=2\|Q(x-y)\|$\\
+    use upper bound of $\|Q(x-y)\|$ with matrix norm:\\
+    $\|Q\|=sup\{ \frac{\|Q(x-y)\|}{\|x-y\|}, x-y \neq 0\}$\\
+    $\|Q\| \|x-y\| \geq \|Q(x-y)\|$\\
+    $\|(2x^TQ)^T-(2y^TQ)^T\|=2\|Q(x-y)\| \leq 2 \|Q\| \|x-y\| $\\
+    let $L=2\|Q\|$\\
+    $\|(2x^TQ)^T-(2y^TQ)^T\| \leq L \|x-y\|$\\
+    It is true that:\\
+    $(\forall x_0>0)(\exists \delta>0)(\exists L>0)(\forall x,y \in B_{\delta}^n(x_0)) \|(2x^TQ)^T-(2y^TQ)^T \| \leq L \|x-y\|$\\
+    Then, the differential of $Q(x)$, $2x_0^TQ$, is Lipschitz continuous and thus continuous.\\
+    Since $Q(x)$ is continuous and its differential is continuous, then $Q$ is continuously differentiable ($C^1$).
+  \end{enumerate}
+
+\end{itemize}
+
+\end {document}

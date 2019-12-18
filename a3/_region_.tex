@@ -1,0 +1,290 @@
+\message{ !name(hw3.tex)}
+\documentclass[12pt,letter]{article}
+
+%% \ifCLASSOPTIONcompsoc
+%% % IEEE Computer Society needs nocompress option
+%% % requires cite.sty v4.0 or later (November 2003)
+%% \usepackage[nocompress]{cite}
+%% \else
+%% % normal IEEE
+%% \usepackage{cite}
+%% \fi
+
+%% \usepackage[fleqn]{amsmath}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{amsmath,amsfonts,amsthm,bm}
+\usepackage{breqn}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{algorithm2e}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{subcaption}
+%% \usepackage{datetime}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{mathrsfs}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+
+\pagestyle{fancy}
+
+\usetikzlibrary{arrows}
+
+\DeclareMathOperator*{\argmin}{argmin}
+\newcommand*{\argminl}{\argmin\limits}
+
+\newcommand{\mathleft}{\@fleqntrue\@mathmargin0pt}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+\begin {document}
+
+\message{ !name(hw3.tex) !offset(-3) }
+
+
+\rhead{(Bill) Yuan Liu, student \#: 996954078\\ Date: 2019/10/27}
+\lhead{ECE1647F - Nonlinear Systems - Assignment 3}
+
+% \begin{align*}    
+% \end{align*}
+
+\begin{itemize}
+  
+\item 2.2\\
+  show $\dot{x}=Ax$ cannot exhibit limit cycles (orbit that is closed, isolated, not an equilibrium)
+  \begin{itemize}
+  \item find closed orbit of $\dot{x}=Ax$ that is not an equilibrium:\\
+  closed orbit := not an equilibrium and is a closed unparameterized curve\\
+  equilibrium, $x^*$, of $\dot{x}=Ax$:\\
+  $f(x^*)=0$\\
+  $Ax^*=0$\\
+  $x^* \in 0 \cup Ker(A)$\\
+  
+  closed orbit,of $\dot{x}=Ax, x(0)=x_0$:\\
+  $O(x_0): (\exists T > 0) \phi(T,x_0) = \phi(x_0) \wedge x_0 \notin \{0 \cup Ker(A)\}$\\
+  the general solution of LTI for some $x_0$ is: $x(t)=e^{At}x_0$\\
+  assuming non-degeneracy of $A$, and using similarity transform, $P\Lambda=AP$: \\
+  $x'(t)=e^{\Lambda t} x'_0$, $\Lambda$ := diagonal / Jordan matrix\\
+  consider simplification to $\R^2$ domain:\\
+  using periodicity of $e^{it}=cos(t)+isin(t), e^{-it}=cos(t)-isin(t)$\\
+  we observe eigenvalues $\lambda = i, -i$\\
+  from similarity transform, the eigenvalues of $A$ are same as that of $\Lambda$\\
+  then closed orbit of $\dot{x}=Ax$ is the image of $\phi(t,x_0)=x_0e^{At}, \lambda_A = \pm i, \forall t \in [0,T]$\\
+
+  \item show closed orbits of $\dot{x}=Ax$ cannot be isolated:\\
+  isolated orbit, $O(x_0)$, satisfies:\\
+  $(\forall p \in O(x_0))(\exists \delta > 0)(\forall q \in B_{\delta}^n(p)) q \notin O(x_0) \implies O(q) \text{ not closed}$\\
+
+  a non-isolated orbit, $O(x_0)$, satisfies:\\
+  $\neg(\forall p \in O(x_0))(\exists \delta > 0)(\forall q \in B_{\delta}^n(p)) q \notin O(x_0) \implies O(q) \text{ not closed}$\\
+  $(\exists p \in O(x_0))\neg(\exists \delta > 0)(\forall q \in B_{\delta}^n(p)) q \notin O(x_0) \implies O(q) \text{ not closed}$\\
+  $(\exists p \in O(x_0))(\forall \delta > 0)\neg(\forall q \in B_{\delta}^n(p)) q \notin O(x_0) \implies O(q) \text{ not closed}$\\
+  $(\exists p \in O(x_0))(\forall \delta > 0)(\exists q \in B_{\delta}^n(p)) \neg(q \notin O(x_0) \implies O(q) \text{ not closed})$\\
+  $(\exists p \in O(x_0))(\forall \delta > 0)(\exists q \in B_{\delta}^n(p)) (q \notin O(x_0)) \wedge O(q) \text{ closed})$\\
+
+  let $x_0'=x_0+\epsilon, \epsilon \neq 0$ such that $x_0'$ is not part of $O(x_0)$ and $x'_0 \in B_{\delta}^n(p)$\\
+
+  f is a linear transform with eigenvalues $\lambda_A = \pm i$, the eigenvalues are invariant for all $x$\\
+
+  using simplied domain of $\R^2$:\\
+  in the coordinate system after similarity transform\\
+  
+  in polar form, $e^{\pm it}$ maintains a magnitude of $(cos^2(t)+sin^2(t))^{1/2}=1$, for all $t$\\
+  
+  since the phase of $e^{\pm it}x'_0$ and $e^{\pm it}x_0$ are in sync with a same period, $\phi(t,x'_0)$ and $\phi(t,x_0)$ never meets and maintain a distance of $\|e^{it}\|\|x'_0-x_0\|$ = $\|x'_0-x_0\|$\\
+
+  then $\phi(t,x'_0)$ is periodic and orbit $O(x'_0)$ is closed for all suitable $\epsilon$\\
+
+  then, this satisfies
+  $(\exists p \in O(x_0))(\forall \delta > 0)(\exists q \in B_{\delta}^n(p)) (q \notin O(x_0)) \wedge O(q) \text{ closed})$, where $q$ corresponds to suitable $x'_0$ earlier\\
+
+  so, closed orbits of $\dot{x}=Ax$ is not isolated, then it cannot have limit cycles\\
+
+  % from periodicity of $e^{\pm it}$, the curve $\phi$ is closed for any initial condition\\
+  
+  % let $N$ be the neighbourhood open set for a point that is in $O(x'_0)$\\
+  % $\R \times N$ is open\\
+  % let $\phi: T \times N \mapsto N$, $\phi(t, x)=e^{At}x, T = (a,b), 0 \in T, x(0)=x_0$\\
+  % $e^{A(0)}x=I x=x$ satisfies consistency: $\phi(0,x)=x$\\
+  % using the property: $e^{A(s+t)}=e^{As+At}$, semigroup property $\phi(s+t,x)=\phi(s,\phi(t,x))$ is satisfied\\
+  % then, $\phi$ is a local phase flow\\
+  % let $\phi$ is also a maximal local phase flow by setting a small enough $N$\\
+
+  % suppose solution for $x'_0'$ is not a closed orbit and does not contain equilibrium, then it is spirally toward another closed orbit.\\
+  % let $x_0$ be that other closed orbit\\
+  % $\phi(t,x'_0)=\phi(t,x_0)$
+  
+  \end{itemize}
+
+  % \pagebreak
+  
+\item 2.3
+  \begin{itemize}
+    \item Give necessary and sufficient conditions for a closed set $\Omega$ to be negatively invariant for (2.1).\\
+
+      let $\Omega^c=\mathcal{X} \setminus \Omega$\\
+      $\text{f is locally Lipschitz on }\mathcal{X}$\\
+      $(\forall x \in L^+(\Omega^c)) f(x) \in T_{L^+(\Omega^c)}(x) \iff \Omega \text{ negatively invariant}$\\
+      where $T_{*}$ is the Bouligant tangent cone and $L^+(*)$ positive limit set\\
+
+      Prove that your conditions are correct using Theorem 2.8:\\
+
+      Since $L^+(*)$ is closed, use Theorem 2.8 to show bidirectional relation of $L^+(\Omega^c)$ being postively invariant for $\dot{x}=f(x)$ iff $f(x) \in T_{L^+(\Omega^c)}$.\\
+
+      For the non-trivial case of the Tangent cone at boundary: since $\partial L^+(\Omega^c)$ do not belong to $\Omega^c$ and f locally Lipschitz means f is locally continuous. Then, any epsilon close neighbouring points p in $\Omega^c$ to some point of $\partial L^+(\Omega^c)$ that satisfy the tangent cone constraint of the nontrivial tangent cone at the boundary is strong enough for positively invariant $\Omega^c$ because the point in $\Omega$ never enters limit set at the boundary in finite time due to continuity of f and f's restriction of direction within the Tangent cone:\\
+      
+      $(\forall x \in \partial L^+(\Omega^c))(\forall p \in \lim_{\epsilon \rightarrow 0} B_\epsilon^n(x) \cap \Omega^c) \{f(p)\}_{\epsilon \rightarrow 0} \rightarrow f(x) \in T_{L^+(\Omega^c)} \implies \phi(t,p) \in \Omega^c, t \rightarrow 0^+$, where $\phi(0,p)=p$\\
+      
+    \item Give necessary and sufficient conditions for a closed set $\Omega$ to be invariant for (2.1). \\
+
+      let $\Omega^c=\mathcal{X} \setminus \Omega$\\
+      $\text{f is locally Lipschitz on }\mathcal{X}$\\
+      $((\forall x \in L^+(\Omega^c)) f(x) \in T_{L^+(\Omega^c)}(x)) \wedge ((\forall p \in \Omega) f(p) \in T_{\Omega}(p)) \iff \Omega \text{ invariant}$\\
+      
+
+      \pagebreak
+      
+      Prove that your conditions are correct using Theorem 2.8\\
+
+      The first half is shown to be being positive invariant for $\Omega^c$. The 2nd half is shown from Theorem 2.8 itself.\\
+      
+      Since positively invariant $\Omega^c$ is equivalent to negatively invariant of $\Omega$, joining 2 time parameter intervals $T_{x_0}^+ \cup T_{x_0}^-=T_{x_0}$ for any $x \in \mathcal{X}$ where each interval satisfies the respective definitions makes the entire interval satisfied for $\Omega$ being invariant.\\
+  
+    \end{itemize}
+  
+    \pagebreak  
+  
+  \item 2.4\\
+    use theorem 2.14 to show Lie derivative is 0 for level set $\Omega$ satisfying $\varphi(x)=0$ and that $\partial \varphi_x$ does not lose rank\\
+    
+    let $x=\begin{bmatrix}x_1 \\ x_2 \end{bmatrix}=\begin{bmatrix}y \\ \dot{y} \end{bmatrix}$\\
+
+    let $\varphi=E'=E-k=\int_{0}^y f(\tau) d \tau + \frac{1}{2}M \dot{y}^2-k=\int_{0}^{x_1} f(\tau) d \tau + \frac{1}{2}M x_2^2-k$\\
+
+    check $\varphi$ is $C^1$:\\
+    
+    $\lim_{h \to 0} \frac{\varphi(x_1+h,x_2)-\varphi(x_1,x_2)}{h}=\frac{ \partial \varphi}{\partial x_1}$\\
+    $\varphi(x_1+h,x_2)-\varphi(x_1,x_2)=F(x_1+h)-F(0)+\frac{1}{2}M x_2^2-k-(F(x_1)-F(0)+\frac{1}{2}M x_2^2-k)=F(x_1+h)-F(x_1)$\\
+    $\lim_{h \to 0}\frac{F(x_1+h)-F(x_1)}{h}=\frac{ \partial \varphi}{\partial x_1}$\\
+    $f(x_1)=\frac{ \partial \varphi}{\partial x_1}$\\
+    $f$ is locally Lipschitz $\implies \frac{ \partial \varphi}{\partial x_1}$ is locally continuous\\
+    
+    $\lim_{h \to 0} \frac{\varphi(x_1,x_2+h)-\varphi(x_1,x_2+h)}{h}=\frac{ \partial \varphi}{\partial x_2}$\\
+    $\varphi(x_1,x_2+h)-\varphi(x_1,x_2)=F(x_1)-F(0)+\frac{1}{2}M (x_2+h)^2-k-(F(x_1)-F(0)+\frac{1}{2}M x_2^2-k)=\frac{1}{2}M(x_2^2+2x_2h+h^2 - x_2^2)=\frac{1}{2}M(2x_2h+h^2)$\\
+    $\lim_{h \to 0} \frac{\frac{1}{2}M(2x_2h+h^2)}{h}=\lim_{h \to 0} \frac{1}{2}M(2x_2+h)=Mx_2=\frac{ \partial \varphi}{\partial x_2}$\\
+    $\frac{\partial \varphi}{\partial x_2}$ is linear and is continuous\\
+
+    then, $\varphi$ is $C^1$\\
+    
+    let $\Omega_k = \text{level\_set}_{k}(\varphi) = \left\{\begin{bmatrix}x_1 \\ x_2\end{bmatrix}: \int_{0}^{x_1} f(\tau) d \tau + \frac{1}{2}M x_2^2-k = 0 \right\}$
+
+    $\partial \varphi_x = \begin{bmatrix} f(x_1) & M x_2\end{bmatrix}$\\
+
+    since $f(x_1)=0$  for $x_1=0$, need to check $Mx_2 \neq 0$ at $x_1=0$\\
+    $\lim_{x_1\rightarrow 0} \int_{0}^{x_1} f(\tau) d \tau + \frac{1}{2}M x_2^2=lim_{x_1\rightarrow 0}k$\\
+    $\lim_{x_1\rightarrow 0}x_1 f(x_1) + \frac{1}{2}M x_2^2=k$\\
+    using $(\forall y \neq 0) y f(y) > 0$ and since f is Lipschitz:\\
+    as $x_1 \rightarrow 0$, $\epsilon + \frac{1}{2}M x_2^2=k, \epsilon \rightarrow 0^+$\\
+    $x_2=(\frac{2}{M}(k-\epsilon))^{\frac{1}{2}}, \epsilon \rightarrow 0^+$\\
+
+    then for $x_1 \rightarrow 0$:\\
+    $(\forall k\neq 0 \implies x_2 \neq 0) \implies \partial \varphi_x \text{ is full row rank}$\\
+    $(k=0\implies x_2 = 0) \implies$ equilibrium point and thus $\partial \varphi_x$ need not be concerned\\
+
+    for the case of $k\neq 0$:\\
+    $M\ddot{y}=-f(y)$\\
+    $f=\dot{x}=\begin{bmatrix} x_2 \\ -\frac{1}{M}f(x_1) \end{bmatrix}$\\
+    $\partial \varphi_x f(x)=f(x_1)x_2-x_2 f(x_1)=0$\\
+
+    then, all energy level sets are invariant\\
+
+    \pagebreak
+    
+  \item 2.5\\
+    use theorem 2.17 to show level set $\Omega$ satisfying $\varphi(x) \leq 0$ and Lie derivative = 0 for those satisfying $\varphi(x)=0$ and that $\partial \varphi_x$ does not lose rank\\
+
+    let $x=\begin{bmatrix}x_1 \\ x_2 \end{bmatrix}=\begin{bmatrix}y \\ \dot{y} \end{bmatrix}$\\
+
+    let $\varphi=E'=E-k=\int_{0}^y f(\tau) d \tau + \frac{1}{2}M \dot{y}^2-k=\int_{0}^{x_1} f(\tau) d \tau + \frac{1}{2}M x_2^2-k$\\
+
+    $\varphi$ is $C^1$ as in 2.4\\
+    
+    let $\Omega_k = \text{level\_set}_{k}(\varphi) = \left\{\begin{bmatrix}x_1 \\ x_2\end{bmatrix}: \int_{0}^{x_1} f(\tau) d \tau + \frac{1}{2}M x_2^2-k \leq 0 \right\}$
+
+    $\partial \varphi_x = \begin{bmatrix} f(x_1) & M x_2\end{bmatrix}$\\
+
+    since $f(x_1)=0$  for $x_1=0$, need to check $Mx_2 \neq 0$ at $x_1=0$\\
+    $\lim_{x_1\rightarrow 0} \int_{0}^{x_1} f(\tau) d \tau + \frac{1}{2}M x_2^2=lim_{x_1\rightarrow 0}k$\\
+    $\lim_{x_1\rightarrow 0}x_1 f(x_1) + \frac{1}{2}M x_2^2=k$\\
+    using $(\forall y \neq 0) y f(y) > 0$ and since f is Lipschitz:\\
+    as $x_1 \rightarrow 0$, $\epsilon + \frac{1}{2}M x_2^2=k, \epsilon \rightarrow 0^+$\\
+    $x_2=(\frac{2}{M}(k-\epsilon))^{\frac{1}{2}}, \epsilon \rightarrow 0^+$\\
+
+    then for $x_1 \rightarrow 0$:\\
+    $(\forall k\neq 0 \implies x_2 \neq 0) \implies \partial \varphi_x \text{ is full row rank}$\\
+    $(k=0\implies x_2 = 0) \implies$ equilibrium point and thus $\partial \varphi_x$ need not be concerned\\
+
+    for the case of $k\neq 0$:\\
+    $M\ddot{y}=-f(y)-g(\dot{y})$\\
+    $f=\dot{x}=\begin{bmatrix} x_2 \\ -\frac{1}{M}f(x_1) -\frac{1}{M}g(x_2) \end{bmatrix}$\\
+    $\partial \varphi_x f(x)=f(x_1)x_2-x_2 f(x_1)-x_2 g(x_2)=-x_2 g(x_2)$\\
+    given $(\forall y \neq 0)\dot{y}g(\dot{y})>0$, then:\\
+    $\partial \varphi_x f(x) \leq 0$\\
+    
+    then, all energy sublevel sets are positively invariant\\
+    
+    \pagebreak
+    
+  \item 2.8\\
+
+    \begin{enumerate}
+    \item show E is nonnegative continuously differentiable function\\
+      
+      $\varphi=E=\int_{0}^{x_1} f(\tau) d \tau + \frac{1}{2}x_2^2$\\
+
+      check $\varphi$ is $C^1$:\\
+      
+      $\lim_{h \to 0} \frac{\varphi(x_1+h,x_2)-\varphi(x_1,x_2)}{h}=\frac{ \partial \varphi}{\partial x_1}$\\
+      $\varphi(x_1+h,x_2)-\varphi(x_1,x_2)=F(x_1+h)-F(0)+\frac{1}{2}x_2^2-k-(F(x_1)-F(0)+\frac{1}{2}x_2^2-k)=F(x_1+h)-F(x_1)$\\
+      $\lim_{h \to 0}\frac{F(x_1+h)-F(x_1)}{h}=\frac{ \partial \varphi}{\partial x_1}$\\
+      $f(x_1)=\frac{ \partial \varphi}{\partial x_1}$\\
+      $f$ is locally Lipschitz $\implies \frac{ \partial \varphi}{\partial x_1}$ is locally continuous\\
+      
+      $\lim_{h \to 0} \frac{\varphi(x_1,x_2+h)-\varphi(x_1,x_2+h)}{h}=\frac{ \partial \varphi}{\partial x_2}$\\
+      $\varphi(x_1,x_2+h)-\varphi(x_1,x_2)=F(x_1)-F(0)+\frac{1}{2} (x_2+h)^2-k-(F(x_1)-F(0)+\frac{1}{2} x_2^2-k)=\frac{1}{2}(x_2^2+2x_2h+h^2 - x_2^2)=\frac{1}{2}(2x_2h+h^2)$\\
+      $\lim_{h \to 0} \frac{\frac{1}{2}(2x_2h+h^2)}{h}=x_2=\frac{ \partial \varphi}{\partial x_2}$\\
+      $\frac{\partial \varphi}{\partial x_2}$ is linear and is continuous\\
+
+      then, $\varphi$ is $C^1$\\
+
+      check nonnegativity of $\varphi$:\\
+      
+      given $f(0)=0$, $(\forall x_1 \neq 0) x_1f(x_1)>0 \implies \int_{0}^{x_1} f(\tau) d \tau \geq 0$\\
+      $\frac{1}{2}x_2^2 \geq 0$\\
+      
+      then, $\varphi \geq 0$\\
+      
+    \item let $\lim_{x_1 \to \pm \infty} \int_{0}^{x_1} f(\tau) d \tau = \infty$, show $(\forall c \geq 0) E_c=\{(x_1,x_2): E(x_1,x_2)=c\}$ is compact and invariant\\
+      
+      let $\varphi'=E-c=\int_{0}^{x_1} f(\tau) d \tau + \frac{1}{2} x_2^2-c$\\
+
+      $E_c = \text{level\_set}_{c}(\varphi') = \left\{\begin{bmatrix}x_1 \\ x_2\end{bmatrix}: \varphi'=0 \Longleftrightarrow \int_{0}^{x_1} f(\tau) d \tau + \frac{1}{2}x_2^2-c = 0 \right\}$\\      
+
+      use result from question 2.4 for $\varphi'$ is $C^1$ since $\varphi'$ differ from $\varphi$ of 2.4 by some constants/coefficients\\
+      
+      $\partial E_c$
+      
+      $\partial \varphi_x = \begin{bmatrix} f(x_1) & x_2\end{bmatrix}$\\
+      
+    \end{enumerate}
+    
+  \item 2.9\\
+    
+  \end{itemize}
+
+\end {document}
+
+\message{ !name(hw3.tex) !offset(-290) }

@@ -1,0 +1,362 @@
+
+\documentclass[12pt,letter]{article}
+
+%% \ifCLASSOPTIONcompsoc
+%% % IEEE Computer Society needs nocompress option
+%% % requires cite.sty v4.0 or later (November 2003)
+%% \usepackage[nocompress]{cite}
+%% \else
+%% % normal IEEE
+%% \usepackage{cite}
+%% \fi
+
+%% \usepackage[fleqn]{amsmath}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{amsmath,amsfonts,amsthm,bm}
+\usepackage{breqn}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{algorithm2e}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{subcaption}
+%% \usepackage{datetime}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{mathrsfs}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+
+\pagestyle{fancy}
+
+\usetikzlibrary{arrows}
+
+\DeclareMathOperator*{\argmin}{argmin}
+\newcommand*{\argminl}{\argmin\limits}
+
+\newcommand{\mathleft}{\@fleqntrue\@mathmargin0pt}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+\begin {document}
+
+\rhead{(Bill) Yuan Liu, student \#: 996954078\\ Date: 2019/10/12}
+\lhead{ECE1647F - Nonlinear Systems - Assignment 2}
+
+% \begin{align*}    
+% \end{align*}
+
+\begin{itemize}
+  
+\item 1.5\\
+  From the graph of x vs. t, it is true that, \\
+  $(\exists t_A)(\exists t_B)(t_A\neq t_B) \wedge (x(t_A,x_0)=x(t_B,x_0)) \wedge (\frac{\partial}{\partial t}x(t_A,x_0) \neq \frac{\partial}{\partial t}x(t_B,x_0))$,\\
+  which occurs in the inflection region of the graph. Thus, the vector field is time varying ($f(t,x)$). x(t) cannot be a solution of a scalar differential equation with locally Lipschitz autonomous vector field.
+  
+\item 1.10\\
+  
+  let $\chi=\begin{bmatrix}t \\ x\end{bmatrix} \in \R \times \mathcal{X}$\\
+
+  let $\bar{f}(\chi)=\begin{bmatrix}1 \\ f(\chi)\end{bmatrix} = \dot{\chi}$\\
+
+  $f(\chi)=f(\begin{bmatrix}t \\ x\end{bmatrix})$\\
+
+  if map $(t,x)\mapsto f(t,x)$ is locally Lipschitz,\\
+  show $\phi(t_0,t_0,x_0)=x_0$\\
+
+  $(t,x)\mapsto f(t,x)$ is locally Lipschitz:\\
+  $(\forall \chi)(\exists L)\|f(\chi)-f(\chi_0)\| \leq L \|\chi-\chi_0\|$ for each $\chi_0$\\
+  
+  $\|\bar{f}(\chi)-\bar{f}(\chi_0)\|=\left\|\begin{bmatrix}1 \\ f(\chi)\end{bmatrix}-\begin{bmatrix}1 \\ f(\chi_0)\end{bmatrix}\right\|=\left\|\begin{bmatrix}0 \\ f(\chi)-f(\chi_0)\end{bmatrix}\right\|$\\
+  $\|\bar{f}(\chi)-\bar{f}(\chi_0)\|=\left\|f(\chi)-f(\chi_0)\right\|$\\
+  $(\forall \chi)(\exists L)\|\bar{f}(\chi)-\bar{f}(\chi_0)\| \leq L \|\chi-\chi_0\|$ for each $\chi_0$\\
+
+  $\bar{f}$ is locally Lipschitz\\
+
+  let $\bar{\phi}: \R \times (\R \times \mathcal{X}) \rightarrow \R \times \mathcal{X}$\\
+  $\phi = \R \times \R \times \mathcal{X} \rightarrow \mathcal{X}$\\
+  $\phi = \text{project}_x \bar{\phi}$, where $\text{project}_x \bar{\phi}: \R \times \mathcal{X} \rightarrow \mathcal{X},\ \text{project}_x \bar{\phi}=\text{map } \begin{bmatrix}t \\ x\end{bmatrix} \mapsto x$\\
+
+  use theorem 1.20: if $\bar{f}$ is locally Lipschitz on $\R \times \mathcal{X}$ then, $(\forall \chi_0)(\exists \chi(t))$ $\chi(t)$ is unique and maximal with $\chi(t_0)=\chi_0=\begin{bmatrix}t_0\\x_0\end{bmatrix}$\\
+  
+  let $\bar\phi(t,\chi_0)$ be that solution satisfying initial condition and $\bar{f}$\\
+
+  $\phi(\tau,t_0,x_0)=project_x(\bar{\phi}(\tau,\chi_0))$\\
+
+  $\phi(t_0,t_0,x_0)=project_x(\bar{\phi}(t_0,\chi_0))=project_x(\chi_0)=project_x(\begin{bmatrix}t_0\\x_0\end{bmatrix})=x_0$\\
+
+  show $\partial_{t'} \phi(t',t_0,x_0)=f(t',\phi(t',t_0,x_0))$\\
+
+  $\partial_{t'} \phi(t',t_0,x_0)=\frac{\partial}{\partial t'}\left(project_x \int_{0}^{t'}\bar{f}(\chi(\tau))d\tau + \chi_0\right)$\\
+
+  $\partial_{t'} \phi(t',t_0,x_0)=project_x \bar{f}(\chi(t'))=project_x\begin{bmatrix}1 \\ f(\chi(t'))\end{bmatrix}\Big|_{\chi(0)=\chi_0}$\\
+
+  $\partial_{t'} \phi(t',t_0,x_0)=f(\chi(t'))=f\left(\begin{bmatrix}t(t') \\ x(t')\end{bmatrix}\right)\Big|_{\chi(0)=\chi_0}$\\
+
+  $t(t')=\int_0^{t'} 1 d\tau = t'+t_0=t'$\\
+  
+  $\partial_{t'} \phi(t',t_0,x_0)=f\left(\begin{bmatrix}t' \\ \phi(t',\chi_0)\end{bmatrix}\right)=f\left(\begin{bmatrix}t' \\ \phi(t', [t_0, x_0])\end{bmatrix}\right) = f(t',\phi(t', t_0, x_0))$\\
+
+  show $(t,t_0,x_0) \mapsto \phi(t,t_0,x_0)$ is continuous\\
+
+  Using theorem 1.26: $\bar{f}$ is locally Lipschitz on $X=\R \times \mathcal{X}$, $W=\{(t,\chi_0)\} \in \R \times (\R \times \mathcal{X}), t \in T_{\chi_0}$:=maximal interval of existence, $\bar{\phi}(t,\chi_0)$ being maximal solution with initial condition $\chi_0$, then W is open and $(t,\chi_0) \mapsto \bar{\phi}(t,\chi_0)$ is continuous. Then, $project_x \bar{\phi}=\phi$, and $(t,t_0,x_0) \mapsto \phi(t,t_0,x_0)$ is continuous. 
+  
+  \pagebreak
+\item 1.11\\
+
+  extending previous question to include constants $\lambda \in \R^m$\\
+  
+  let $\chi=\begin{bmatrix}t \\ x \\ \lambda \end{bmatrix} \in \R \times \mathcal{X} \times \R^m$\\
+    
+  let $\bar{f}(\chi)=\begin{bmatrix}1 \\ f(\chi) \\ 0^{m \times 1} \end{bmatrix} = \dot{\chi}$\\
+
+  $f(\chi)=f\left(\begin{bmatrix}t \\ x \\ 0^{m \times 1} \end{bmatrix}\right)$\\
+
+  if map $(t,x,\lambda)\mapsto f(t,x,\lambda)$ is locally Lipschitz,\\
+  show $\phi(t,t_0,x_0,\lambda_0)$ is continuous satisfying $\phi(t_0,t_0,x_0,\lambda_0)=x_0$\\
+
+  since map $(t,x,\lambda)\mapsto f(t,x,\lambda)$ is locally Lipschitz:\\
+  $(\forall \chi)(\exists L)\|f(\chi)-f(\chi_0)\| \leq L \|\chi-\chi_0\|$ for each $\chi_0$\\
+  
+  $\|\bar{f}(\chi)-\bar{f}(\chi_0)\|=\left\|\begin{bmatrix}1 \\ f(\chi) \\ 0^{m \times 1}\end{bmatrix}-\begin{bmatrix}1 \\ f(\chi_0) \\ 0^{m \times 1} \end{bmatrix}\right\|$\\
+
+  $\|\bar{f}(\chi)-\bar{f}(\chi_0)\|=\left\|\begin{bmatrix}0 \\ f(\chi)-f(\chi_0) \\ 0^{m \times 1} \end{bmatrix}\right\|=\left\|\begin{bmatrix}f(\chi)-f(\chi_0)\end{bmatrix}\right\|$\\
+  
+  $(\forall \chi)(\exists L)\|\bar{f}(\chi)-\bar{f}(\chi_0)\|=\|f(\chi)-f(\chi_0)\| \leq L \|\chi-\chi_0\|$ for each $\chi_0$\\
+
+  $\bar{f}$ is locally Lipschitz\\
+  
+  We can proceed down the same general method as in the previous question and get the resulting $\phi=project_x(\bar{\phi})$ and in the end $\bar{\phi}(t,\chi_0)$ is continuous satisfying initial condition and $\phi(t,\chi_0)$ is continuous satisying the initial condition.
+  
+  let $\bar{\phi}: \R \times \mathcal{X} \times \R^m \rightarrow \mathcal{X} \times \R^m$, where $\bar{\phi}(t, \chi_0)$ is a maximal solution satisfying initial condition $\chi_0$ via theorem 1.20\\
+
+  use theorem 1.26 with $\bar{f}$ being locally Lipschitz and $\bar{\phi}(t, \chi_0)$ being a maximal solution so that W is open and $(t,\chi_0) \mapsto \bar{\phi}(t,\chi_0)$ is continuous.\\
+  
+  $\phi = project_x(\bar{\phi})$, where $project_x(\bar{\phi}): \mathcal{X} \times \R^m \rightarrow  \mathcal{X}$\\
+  Then, $project_x((t,\chi_0) \mapsto \bar{\phi}(t,\chi_0))=\phi$ is continuous.
+  
+  \pagebreak
+\item 1.13\\
+
+  1)\\
+  $t\in\R$ small enough that domain of definition of $\phi_t$ is non-empty.\\
+  Determine domain and codomain of the map $\phi_t$.\\
+  domain: ${x_0: (\forall x_0) (t',x_0) \in W \neq \O,\ \forall t' \in [0,t] \}|_{t\ fixed}$\\
+  codomain: $\{\phi(t'): x(0)=x_0,\ \forall t' \in [0,t],\ x_0 \in d\}$\\
+
+  injective:\\
+  if x goes through $x_a$, $x_b$ such that $x_a\neq x_b$, then $\phi(0, x_a)$ = $\phi(t_c, x_b), t_c \neq 0$.\\
+  $\phi(t, x_a)$ = $\phi(t,\phi(t_c,x_b))$\\
+  $\phi(t, x_a)$ = $\phi(t+t_c,x_b)) \neq \phi(t, x_b)$.\\
+  Then it is injective: $(\forall x_a, x_b) x_a \neq x_b \wedge \phi(t, x_a) \neq \phi(t, x_b)$\\
+
+  surjective:\\
+  let $\phi_t(x)=x_2$\\
+  $\phi(0,x_2)=\phi(t,x)$\\
+  $\phi(-t,x_2)=\phi(0,x)=x$\\
+  Since the domain of definition of $\phi_t$ is non-empty, it guarantees that elements in codomain as atleast a corresponding element in the domain.\\
+  $(\forall x_2=\{\phi(t'): x(0)=x_0,\ \forall t' \in [0,t],\ x_0 \in d\}) (\exists x_0)(x_0 \mapsto \phi_t(x_0)=x_2)$\\
+
+  Then $\phi_t$ is injective and surjective, then $\phi_t$ is bijective.\\
+  An inverse exists so that $y \mapsto \phi_t^{-1}(y) = x$:\\
+  $\phi_t(x)=\phi(t,x)=y=\phi(0,y)$\\
+  $\phi(0,x)=\phi(-t,y)$\\
+  $\phi_t^{-1}(y)=\phi(-t,y)=x$\\
+  
+  \pagebreak
+  
+  2)\\
+  let $(\exists T) T>0 \wedge x_1 \in \mathcal{X} \wedge x_1=\phi(T,x_1)$\\
+  Show that:\\
+  $(\forall t \in \R) \phi(t+T,x_1)=\phi(t,x_1), \text{system keeps looping around without possibly moving on to }x_2}$\\
+  
+  let $\phi(T_A,x_1)=x_2$\\
+  let $T_A=T_1+T_2+...+T_n$, where $T_1,...,T_{n-1}=T$, $T_n=T_A\ mod\ T$\\
+
+  $\phi(T_A,x_1)=\phi(T_1+T_2+...+T_n,x_1)$\\
+  $\phi(T_A,x_1)=\phi(T_2+...+T_n,\phi(T_1,x_1))=\phi(T_2+...+T_n,x_1)$\\
+  ...\\
+  $\phi(T_A,x_1)=\phi(T_n,x_1)$\\
+  Then, $\phi(T_n,x_1)$ is within cyclic path of $\phi(0,x_1)$ and $\phi(T,x_1)$. $x_2$ may not be reached for any T.\\
+  
+  3)\\
+  let $(\forall x_1,x_2 \in \mathcal{X})(\exists t_1,t_2 \in \R)( x_1 \neq x_2 \wedge \phi(t_1,x_1)=\phi(t_2,x_2))$\\
+  show $t_1 \neq t_2$\\
+  
+  if a curve ever connects $x_1$ with $x_2$, then: $\phi(0,x_1)=\phi(\epsilon,x_2), \epsilon \neq 0$\\
+  $\phi(t_1,x_1)=\phi(t_1,\phi(\epsilon,x_2))=\phi(t_2,x_2))$\\
+  
+  if $t_1 = t_2$:\\
+  $\phi(t,x_1)=\phi(t,\phi(\epsilon,x_2))=\phi(t,x_2))$\\
+  $\phi(t,x_1)=\phi(t+\epsilon,x_2)=\phi(t,x_2))$\\
+  it is not true that $\phi(t+\epsilon,x_2)=\phi(t,x_2)), \epsilon \neq 0$\\
+
+  then, $(\forall x_1,x_2 \in \mathcal{X})(\exists t_1,t_2 \in \R)( x_1 \neq x_2 \wedge \phi(t_1,x_1)=\phi(t_2,x_2)) \rightarrow t_1 \neq t_2$\\
+
+  consider $t_1 \neq t_2$, show flow carries $x_1$ to $x_2$ or vice versa, in positive time.\\
+
+  let $t_1+\delta=t_2, \delta \neq 0$\\
+
+  $\phi(t_1,x_1)=\phi(t_2,x_2)$\\
+  $\phi(t_1,x_1)=\phi(t_1+\delta,x_2)$\\
+  $\phi(0,x_1)=\phi(\delta,x_2)$\\
+  $x_1=\phi(\delta,x_2)$\\
+  $\delta>0: x_2 \rightarrow x_1$ via flow\\
+  $\phi(-\delta,x_1)=\phi(x_2)$\\
+  $\phi(-\delta,x_1)=x_2$\\
+  $\delta<0: x_2=\phi(-\delta,x_1)=\phi(|\delta|,x_1), x_1 \rightarrow x_2$ via flow\\
+
+  \pagebreak
+  
+\item 1.15\\
+
+  part 2:\\
+
+  $\phi(t,x)=\begin{bmatrix}e^t & 0 \\ 0 & e^{2t} \end{bmatrix} x$\\
+
+  $W={(t,x_0) \in \R \times \mathcal{X}, t \in T_{x_0} }$ is open.\\
+
+  $\phi(0,x)=\begin{bmatrix}1 & 0 \\ 0 & 1 \end{bmatrix} x = x$\\
+
+  Consistency is satisfied.\\
+
+  $\phi(s+t,x)=
+  \begin{bmatrix}e^{s+t} & 0 \\ 0 & e^{2s+2t} \end{bmatrix}
+  x$\\
+  
+  $\phi(s,\phi(t,x))=
+  \begin{bmatrix}e^s & 0 \\ 0 & e^{2s} \end{bmatrix}
+  \begin{bmatrix}e^t & 0 \\ 0 & e^{2t} \end{bmatrix}
+  x=\begin{bmatrix}e^{s+t} & 0 \\ 0 & e^{2s+2t} \end{bmatrix} x = \phi(s+t,x)$\\
+
+  Semigroup property is satisfied.\\
+
+  Interval of maximal existence $T_{x_0}=(-\infty, \infty)$. Then $W=\R \times \mathcal{X}$ and $\phi(t,x)$ is a phase flow.\\
+
+  vector field:\\
+
+  $\frac{\partial}{\partial t} \phi(t,x) = f(x)|_{t}=
+  \begin{bmatrix}
+    e^{t} & 0\\
+    0 & 2e^{2t}
+  \end{bmatrix} x $\\
+  
+  part 6:\\
+  
+  $\phi(t,x)=e^{-t}\begin{bmatrix}cos(2t) & sin(2t) \\ -sin(2t) & cos(2t) \end{bmatrix} x$\\
+
+  $W={(t,x_0) \in \R \times \mathcal{X}, t \in T_{x_0} }$ is open.\\
+  
+  $\phi(0,x)=\begin{bmatrix}1 & 0 \\ 0 & 1 \end{bmatrix} x = x$\\
+
+  Consistency is satisfied.\\
+
+  \pagebreak
+  
+  $\phi(s+t,x)=
+  e^{-(s+t)}\begin{bmatrix}
+    cos(2s+2t) & sin(2s+2t) \\
+    -sin(2s+2t) & cos(2s+2t) \end{bmatrix}
+  x$\\
+  
+  $\phi(s,\phi(t,x))=
+  e^{-s}\begin{bmatrix}cos(2t) & sin(2t) \\ -sin(2t) & cos(2t) \end{bmatrix}
+  e^{-t}\begin{bmatrix}cos(2s) & sin(2s) \\ -sin(2s) & cos(2s) \end{bmatrix}
+  x $\\
+  $\phi(s,\phi(t,x))=
+  e^{-(s+t)}\begin{bmatrix}
+    cos(2s)cost(2t)-sin(2s)sin(2t) & cos(2s)sin(2t)+sin(2s)cos(2t) \\
+    -sin(2s)cos(2t)-cos(2s)sin(2t) & -sin(2s)sin(2t)+cos(2s)cos(2t) \end{bmatrix}
+  x $\\
+
+  $cos(a \pm b)=cos(a)cos(b) \mp sin(a)sin(b)$\\
+  $sin(a \pm b)=sin(a)cos(b) \pm cos(a)sin(b)$\\
+
+  $\phi(s,\phi(t,x))=e^{-(s+t)}\begin{bmatrix}
+    cos(2s+2t) & sin(2s+2t) \\
+    -sin(2s+2t) & cos(2s+2t) \end{bmatrix}
+  x=\phi(s+t,x)$\\
+
+  Semigroup property is satisfied.\\
+
+  Interval of maximal existence $T_{x_0} = (-\infty, \infty)$. Then $W=\R \times \mathcal{X}$ and $\phi(t,x)$ is a phase flow.\\
+  
+  vector field:\\
+
+  $\frac{\partial}{\partial t} \phi(t,x) = f(x)|_{t}=
+  \begin{bmatrix}
+    -e^{-t}cos(2t)-2e^{-t}sin(2t) & -e^{-t}sin(2t)+2e^{-t}cos(2t)\\
+    e^{-t}sin(2t)-2e^{-t}cos(2t) & -e^{-t}cos(2t)-2e^{-t}sin(2t)
+  \end{bmatrix} x $\\
+
+  \pagebreak
+  
+\item 1.16\\
+
+  1)\\
+  $\phi(t,x)=x$\\
+  $\phi(0,x)=x$\\
+  Consistency is satisfied.\\
+  
+  $\phi(s+t,x)=x$\\
+  $\phi(s,\phi(t,x))=x$\\
+  Semigroup property is satisfied.\\
+
+  $W={(t,x_0)\in \R \times \mathcal{X}}, t \in T_{x_0} = (-\infty, +\infty)$\\
+  $W=\R \times \mathcal{X}}$\\
+  $\phi(t,x)=x$ is a phase flow.\\
+
+  2)\\
+  $\phi(t,x)=tx$\\
+  $(\forall x)\phi(0,x)=0 \neq x$\\
+  Consistency is not satisfied.\\
+  
+  $\phi(s+t,x)=(s+t)x$\\
+  $(\forall s,t) \phi(s,\phi(t,x))=t(sx) \neq \phi(s+t,x)$\\
+  Semigroup property is not satisfied.\\
+
+  $\phi(t,x)=tx$ is not a phase flow.\\
+
+  3)\\
+  $\phi(t,x)=(t+1)x$\\
+  $\phi(0,x)=x$\\
+  Consistency is satisfied.\\
+  
+  $\phi(s+t,x)=(s+t+1)x$\\
+  $(\forall s,t) \phi(s,\phi(t,x))=(s+1)(t+1)x = (st+s+t+1)x \neq \phi(s+t,x)$\\
+  Semigroup property is not satisfied.\\
+
+  $\phi(t,x)=tx$ is not a phase flow.\\
+  
+  \pagebreak
+  
+  4)\\
+  $\phi(t,x)=e^{t+1}x$\\
+  $(\forall x)\phi(0,x)=e^1x \neq x$\\
+  Consistency is not satisfied.\\
+  
+  $\phi(s+t,x)=e^{s+t+1}x$\\
+  $\phi(s,\phi(t,x))= e^{s+1}e^{t+1}x=e^{s+t+2}x\neq \phi(s+t,x)$\\
+  Semigroup property is not satisfied.\\
+
+  $\phi(t,x)=e^{t+1}x$ is not a phase flow.\\
+
+  5)\\
+  $\phi(t,x)=e^tx$\\
+  $(\forall x)\phi(0,x)=x$\\
+  Consistency is satisfied.\\
+  
+  $\phi(s+t,x)=e^{s+t}x$\\
+  $\phi(s,\phi(t,x))= e^{s}e^{t}x=e^{s+t}x = \phi(s+t,x)$\\
+  Semigroup property is satisfied.\\
+
+  $W={(t,x_0)\in \R \times \mathcal{X}}, t \in T_{x_0} = (-\infty, +\infty)$\\
+  $W=\R \times \mathcal{X}}$\\
+  $\phi(t,x)=e^tx$ is a phase flow.\\
+  
+  
+\end{itemize}
+
+\end {document}
